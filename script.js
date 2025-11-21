@@ -8,30 +8,7 @@ for (var i = 0; i < 9; i++) {
 }
 
 
-var board = Array.from({ length: 9 }, () => Array(9).fill(0))
-
-const lastSolveEl = document.getElementById('lastSolve')
-const avgSolveEl = document.getElementById('avgSolve')
-const solveCountEl = document.getElementById('solveCount')
-
-let totalSolveTimeMs = 0
-let solvedPuzzleCount = 0
-
-function formatMs(value) {
-	return `${value.toFixed(2)} ms`
-}
-
-function updateSolveStats(latestSolveTime) {
-	if (typeof latestSolveTime !== 'number' || Number.isNaN(latestSolveTime)) {
-		return
-	}
-	solvedPuzzleCount += 1
-	totalSolveTimeMs += latestSolveTime
-
-	lastSolveEl.innerText = formatMs(latestSolveTime)
-	avgSolveEl.innerText = formatMs(totalSolveTimeMs / solvedPuzzleCount)
-	solveCountEl.innerText = solvedPuzzleCount
-}
+var board = [[], [], [], [], [], [], [], [], []]
 
 function FillBoard(board) {
 	for (var i = 0; i < 9; i++) {
@@ -64,15 +41,10 @@ GetPuzzle.onclick = function () {
 
 SolvePuzzle.onclick = () => {
 	const startTime = performance.now();
-	const solved = SudokuSolver(board, 0, 0, 9);
+	SudokuSolver(board, 0, 0, 9);
 	const endTime = performance.now();
-	const solveTime = endTime - startTime;
-	if (solved) {
-		console.log(`Solve time: ${solveTime.toFixed(2)}ms`);
-		updateSolveStats(solveTime);
-	} else {
-		console.warn('Unable to solve the current puzzle.');
-	}
+const solveTime = endTime - startTime;
+console.log(`Solve time: ${solveTime.toFixed(2)}ms`);
 };
 
 function isValid( board, i,j, num, n)
