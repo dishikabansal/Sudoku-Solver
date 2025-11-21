@@ -40,7 +40,11 @@ GetPuzzle.onclick = function () {
 }
 
 SolvePuzzle.onclick = () => {
+	const startTime = performance.now();
 	SudokuSolver(board, 0, 0, 9);
+	const endTime = performance.now();
+const solveTime = endTime - startTime;
+console.log(`Solve time: ${solveTime.toFixed(2)}ms`);
 };
 
 function isValid( board, i,j, num, n)
